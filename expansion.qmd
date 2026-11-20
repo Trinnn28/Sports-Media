@@ -1,0 +1,82 @@
+---
+title: "Expansion & Modern Milestones"
+format:
+  html:
+    toc: true
+---
+
+The landscape of North American professional basketball is transforming rapidly. From the WNBA's historic growth toward 18 franchises to the NBA's active expansion evaluations, new markets and modern milestones are reshaping both leagues.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(plotly)
+
+expansion_data <- tibble(
+  Franchise = c(
+    "Golden State Valkyries", "Toronto Tempo", "Portland Fire", 
+    "Houston Comets (Revival)", "Cleveland WNBA", "Detroit WNBA", "Philadelphia WNBA",
+    "Seattle (NBA Evaluation)", "Las Vegas (NBA Evaluation)"
+  ),
+  League = c("WNBA", "WNBA", "WNBA", "WNBA", "WNBA", "WNBA", "WNBA", "NBA", "NBA"),
+  Year = c(2025, 2026, 2026, 2027, 2028, 2029, 2030, 2028, 2028),
+  Type = c(
+    "Debuted", "Debuted", "Debuted", 
+    "Approved Relocation", "Awarded Franchise", "Awarded Franchise", "Awarded Franchise",
+    "NBA Board Evaluation", "NBA Board Evaluation"
+  )
+) |>
+  mutate(Franchise = fct_reorder(Franchise, Year))
+
+p_exp <- ggplot(expansion_data, aes(
+  x = Year,
+  y = Franchise,
+  color = League,
+  text = paste0(
+    "<b>", Franchise, "</b><br>",
+    "League: ", League, "<br>",
+    "Timeline Year: ", Year, "<br>",
+    "Status: ", Type
+  )
+)) +
+  geom_point(size = 4) +
+  scale_color_manual(values = c("NBA" = "#1D428A", "WNBA" = "#FA4616")) +
+  scale_x_continuous(breaks = seq(2024, 2030, by = 1), limits = c(2024.5, 2030.5)) +
+  labs(
+    title = "Basketball Expansion Wave (2025–2030)",
+    x = "Year of Debut / Target Window",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom")
+
+ggplotly(p_exp, tooltip = "text")
+```
+
+---
+
+## 1. Redrawing the Basketball Map: The 2025–2030 Expansion Wave
+
+- **WNBA Expansion from 12 to 18 Teams:** Following the debut of the **Golden State Valkyries** in 2025, the WNBA added two 30th-anniversary franchises in 2026: the **Portland Fire** and Canada's first team, the **Toronto Tempo**. The league has also officially awarded expansion franchises backed by NBA ownership groups to **Cleveland (2028)**, **Detroit (2029)**, and **Philadelphia (2030)**.
+- **Houston Comets Revival (2027):** Following the 2026 season, the WNBA approved relocating the Connecticut Sun to Houston to revive the storied four-time champion **Houston Comets** beginning in 2027.
+- **NBA Seattle & Las Vegas Evaluations:** In **March 2026**, the NBA Board of Governors voted unanimously (**30–0**) to formally advance expansion evaluations for **Seattle** (to return the SuperSonics to Climate Pledge Arena) and **Las Vegas**.
+
+---
+
+## 2. Historic Breakthroughs in 2025 & 2026
+
+- **Golden State Valkyries Win First Game 7 in Finals History (2026):** In just their second season after debuting in San Francisco, head coach Natalie Nakase's Valkyries topped the Atlanta Dream **4–3** in the **2026 WNBA Finals**—the first Finals Game 7 in WNBA history—behind Finals MVP **Gabby Williams**.
+- **New York Knicks End 53-Year Title Drought (June 2026):** Madison Square Garden celebrated its first NBA title since 1973 as Finals MVP **Jalen Brunson**, OG Anunoby, Mikal Bridges, Josh Hart, and Karl-Anthony Towns defeated the San Antonio Spurs in five games.
+- **Oklahoma City Thunder & SGA (2025–2026):** After winning Game 7 of the 2025 NBA Finals over the Indiana Pacers, **Shai Gilgeous-Alexander** earned consecutive regular-season **NBA MVP awards in 2024–25 and 2025–26**.
+
+---
+
+## 3. All-Time Statistical Benchmarks Across Eras
+
+When evaluating career statistics, schedule context is critical: the NBA has featured an **82-game season** since 1967–68, while the WNBA expanded incrementally from **28 games in 1997** to **44 games in 2025–2026**.
+
+- **WNBA Scoring & Playmaking:** **Diana Taurasi** (Phoenix Mercury) concluded her Hall of Fame career as the first player to surpass 10,000 career points (**10,646 PTS**), while **Sue Bird** holds the career assists benchmark (**3,234 AST**). **Caitlin Clark** set single-season playmaking records in Indiana while accelerating attendance and viewership records across the sport.
+- **NBA Longevity:** **LeBron James** surpassed Kareem Abdul-Jabbar's 38,387 points to eclipse **40,000 career regular-season points**, while **John Stockton** continues to hold all-time records for assists (**15,806 AST**) and steals (**3,265 STL**).

@@ -1,0 +1,17 @@
+---
+title: "About"
+---
+
+## About the Author
+
+Hi, I'm **Trinity Harden**, a student-athlete playing basketball at [New College of Florida](https://www.ncf.edu/). I created this project to explore media coverage, franchise histories, and statistical trends across professional basketball.
+
+- **Email:** [T.harden28@ncf.edu](mailto:T.harden28@ncf.edu)
+- **GitHub:** [Trinnn28](https://github.com/Trinnn28)
+- **Project Repository:** [Trinnn28/Sports-Media](https://github.com/Trinnn28/Sports-Media)
+
+---
+
+## Data Sources
+
+The data for this project comes from multiple sources: media coverage articles were gathered from the [NewsData.io Sports News dataset](https://github.com/newsdataapi/newsdata.io-free-datasets) (licensed under CC BY 4.0), while comprehensive franchise records, current rosters, starting lineups, and historical accolades across the NBA and WNBA were compiled from [NBA.com](https://www.nba.com/), [WNBA.com](https://www.wnba.com/), and [Basketball-Reference](https://www.basketball-reference.com/).

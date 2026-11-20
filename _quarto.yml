@@ -8,9 +8,16 @@ website:
       - href: index.qmd
         text: Home
       - href: exploration.qmd
-        text: Exploration
-      - href: stories.qmd
-        text: Stories
+        text: Franchise Map
+      - href: compare.qmd
+        text: Head-to-Head Compare
+      - href: dynasties.qmd
+        text: Dynasties & MVPs
+      - href: expansion.qmd
+        text: Expansion & Milestones
+    right:
+      - href: about.qmd
+        text: About
 
 format:
   html:

@@ -1,0 +1,117 @@
+---
+title: "Dynasties & Franchise MVPs"
+format:
+  html:
+    toc: true
+---
+
+Explore championship dynasties, historic rivalries, and the most decorated players in **NBA (1946–2026)** and **WNBA (1997–2026)** history. Because season lengths and eras differ (*82-game regular season in the NBA vs. up to 44 games in the WNBA*), each league's achievements are charted on its own scale.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(plotly)
+
+teams <- read_csv("data/teams.csv", show_col_types = FALSE)
+
+nba_top <- teams |>
+  filter(league == "NBA", championships > 0 | mvps_won_with_team > 0) |>
+  mutate(team_short = str_remove(team, " \\(.*\\)")) |>
+  arrange(desc(championships), desc(mvps_won_with_team)) |>
+  slice_head(n = 12) |>
+  mutate(team_short = fct_reorder(team_short, championships))
+
+p_nba <- ggplot(
+  nba_top,
+  aes(
+    x = championships,
+    y = team_short,
+    fill = mvps_won_with_team,
+    text = paste0(
+      "<b>", team, "</b><br>",
+      "NBA Championships: ", championships, " (", championship_years, ")<br>",
+      "NBA MVPs Won With Franchise: ", mvp_details
+    )
+  )
+) +
+  geom_col() +
+  scale_fill_gradient(low = "#93C5FD", high = "#1D428A", name = "NBA MVPs\n(With Team)") +
+  labs(
+    title = "NBA Championship Dynasties & Franchise MVPs (1946–2026)",
+    x = "Total NBA Championships",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 12)
+
+ggplotly(p_nba, tooltip = "text")
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+wnba_top <- teams |>
+  filter(league == "WNBA", championships > 0 | mvps_won_with_team > 0) |>
+  mutate(team_short = str_replace(team, " \\(2027 Relocation Revival\\)", " (1997–2008 / 2027)")) |>
+  arrange(desc(championships), desc(mvps_won_with_team)) |>
+  mutate(team_short = fct_reorder(team_short, championships))
+
+p_wnba <- ggplot(
+  wnba_top,
+  aes(
+    x = championships,
+    y = team_short,
+    fill = mvps_won_with_team,
+    text = paste0(
+      "<b>", team, "</b><br>",
+      "WNBA Championships: ", championships, " (", championship_years, ")<br>",
+      "WNBA MVPs Won With Franchise: ", mvp_details
+    )
+  )
+) +
+  geom_col() +
+  scale_fill_gradient(low = "#FDBA74", high = "#C2410C", name = "WNBA MVPs\n(With Team)") +
+  labs(
+    title = "WNBA Championship Franchises & Franchise MVPs (1997–2026)",
+    x = "Total WNBA Championships",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 12)
+
+ggplotly(p_wnba, tooltip = "text")
+```
+
+*Hover over any bar above to view individual championship years and the specific MVP winners who earned the honor while playing for that franchise.*
+
+---
+
+## 1. Celtics vs. Lakers: Basketball's Defining Championship Rivalry
+
+No rivalry in North American basketball matches the **Boston Celtics** (18 NBA championships) and **Los Angeles Lakers** (17 NBA championships), who have met **12 times in the NBA Finals** and account for nearly half of all titles since 1947.
+
+- **1959–1969 (Russell vs. West & Baylor):** Bill Russell—who won **5 NBA MVPs** with Boston—led the Celtics past the Lakers in seven Finals series during an unprecedented 11-title dynasty.
+- **1980s Revival (Bird vs. Magic):** Larry Bird (**3 Celtics MVPs**, 1984–86) and Magic Johnson (**3 Lakers MVPs**, 1987, 1989, 1990) met in the 1984, 1985, and 1987 NBA Finals, transforming the league's television ratings and national reach.
+- **Modern Chapters (2008–2024):** Boston won in 2008 behind Paul Pierce and Kevin Garnett; Kobe Bryant answered in Game 7 of 2010; LeBron James tied Boston at 17 banners in 2020; and Jayson Tatum and Jaylen Brown hoisted Banner **18** in **2024**.
+
+---
+
+## 2. WNBA Dynasties: From the 4-Peat Comets to A'ja Wilson's Aces
+
+Across the WNBA's first 30 seasons (**1997–2026**), four franchises have set the championship gold standard:
+
+- **Houston Comets (4 Titles: 1997, 1998, 1999, 2000):** Led by **Cynthia Cooper** (back-to-back WNBA MVPs in 1997 & 1998, plus four straight Finals MVPs), **Sheryl Swoopes** (3 WNBA MVPs with Houston: 2000, 2002, 2005), and **Tina Thompson**, Houston captured the only **four-peat** in WNBA history.
+- **Minnesota Lynx & Seattle Storm (4 Titles Each):** Cheryl Reeve's Lynx dominated odd-numbered years in the 2010s with **Maya Moore** (2014 MVP) and **Sylvia Fowles** (2017 MVP), while Seattle went a perfect **4–0** in Finals appearances behind **Sue Bird**, **Lauren Jackson** (3 Storm MVPs), and **Breanna Stewart** (2018 Storm MVP).
+- **Las Vegas Aces (3 Titles: 2022, 2023, 2025):** Coached by Becky Hammon, Las Vegas captured three championships in four years, anchored by **A'ja Wilson**, who became the first player to win **five regular-season MVP awards** (2020, 2022, 2024, 2025, 2026).
+
+---
+
+## 3. Chasing Perfection: The 72–10 Bulls and 73–9 Warriors
+
+Two 82-game regular seasons stand at the pinnacle of basketball history:
+
+- **1995–96 Chicago Bulls (72–10 Regular Season, 15–3 Playoffs):** Returning for his first full season after retirement, **Michael Jordan** won his fourth of **5 MVPs with Chicago**, led the league with 30.4 PPG, and led Chicago to 72 wins and the first trophy of their second three-peat.
+- **2015–16 Golden State Warriors (73–9 Regular Season):** **Stephen Curry** shattered the single-season record with **402 three-pointers** and became the first unanimous MVP in NBA history, carrying Golden State to a 73–9 mark.
